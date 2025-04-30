@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:inventory/theme/app_theme.dart';
+import 'package:inventory/screens/materials_screen.dart';
+import 'package:inventory/screens/cost_report_screen.dart';
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends StatefulWidget {
   final bool isAdmin;
 
   const DashboardScreen({
@@ -9,6 +11,11 @@ class DashboardScreen extends StatelessWidget {
     required this.isAdmin,
   });
 
+  @override
+  State<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,11 +32,11 @@ class DashboardScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: isAdmin ? _buildAdminDashboard() : _buildOperatorDashboard(),
+      body: widget.isAdmin ? _buildAdminDashboard(context) : _buildOperatorDashboard(),
     );
   }
 
-  Widget _buildAdminDashboard() {
+  Widget _buildAdminDashboard(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -79,28 +86,38 @@ class DashboardScreen extends StatelessWidget {
                   'Materials',
                   Icons.inventory,
                   () {
-                    // TODO: Navigate to materials screen
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MaterialsScreen()),
+                    );
                   },
                 ),
                 _buildActionCard(
                   'Users',
                   Icons.people,
                   () {
-                    // TODO: Navigate to users screen
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Users screen not implemented yet.')),
+                    );
                   },
                 ),
                 _buildActionCard(
                   'Reports',
                   Icons.assessment,
                   () {
-                    // TODO: Navigate to reports screen
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CostReportScreen()),
+                    );
                   },
                 ),
                 _buildActionCard(
                   'Settings',
                   Icons.settings,
                   () {
-                    // TODO: Navigate to settings screen
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Settings screen not implemented yet.')),
+                    );
                   },
                 ),
               ],
